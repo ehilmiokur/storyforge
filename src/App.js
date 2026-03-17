@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 const FilmGrain = () => (
   <svg style={{position:'fixed',top:0,left:0,width:'100%',height:'100%',
@@ -40,7 +41,8 @@ const Divider = () => (
 );
 
 // ─── LANDING PAGE ────────────────────────────────────────────────────────────
-const LandingPage = ({ onEnter }) => {
+const LandingPage = () => {
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   useEffect(() => { setTimeout(() => setVisible(true), 100); }, []);
 
@@ -124,7 +126,7 @@ const LandingPage = ({ onEnter }) => {
 
         <button
           data-testid="landing-enter-button"
-          onClick={onEnter}
+          onClick={() => navigate('/login')}
           style={{
             background:'transparent', border:'1px solid #d4af37',
             color:'#d4af37', padding:'16px 48px', fontSize:'11px',
@@ -175,7 +177,8 @@ const LandingPage = ({ onEnter }) => {
 };
 
 // ─── LOGIN PAGE ──────────────────────────────────────────────────────────────
-const LoginPage = ({ onBack }) => {
+const LoginPage = () => {
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -314,7 +317,7 @@ const LoginPage = ({ onBack }) => {
         <div className="text-center">
           <button
             data-testid="login-back-button"
-            onClick={onBack}
+            onClick={() => navigate('/')}
             style={{
               background:'none', border:'none', color:'#6a6058',
               fontSize:'11px', letterSpacing:'0.2em', textTransform:'uppercase',
@@ -339,7 +342,12 @@ const LoginPage = ({ onBack }) => {
 
 // ─── ROOT ────────────────────────────────────────────────────────────────────
 export default function App() {
-  const [page, setPage] = useState('landing');
-  if (page === 'login') return <LoginPage onBack={() => setPage('landing')}/>;
-  return <LandingPage onEnter={() => setPage('login')}/>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
