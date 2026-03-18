@@ -24,22 +24,3 @@ jobs:
 
       - name: Run tests
         run: npm test --watchAll=false
-
-  open-pr:
-    runs-on: ubuntu-latest
-    needs: test
-    permissions:
-      contents: write
-      pull-requests: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Create Pull Request to main
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
-          branch: stage
-          title: "🚀 Stage → Main: Ready to deploy"
-          body: "✅ All tests passed on stage. Review and merge to deploy to Azure."
