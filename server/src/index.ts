@@ -1,12 +1,17 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import scriptsRouter from './routes/scripts';
 
 const app = express();
 const PORT = process.env.PORT ?? 3001;
+const isProd = process.env.NODE_ENV === 'production';
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+if (!isProd) {
+  app.use(cors({ origin: 'http://localhost:3000' }));
+}
+
 app.use(express.json());
 
 app.get('/api/health', (_req, res) => {
@@ -14,6 +19,14 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api/scripts', scriptsRouter);
+
+if (isProd) {
+  const buildPath = path.join(__dirname, '../../build');
+  app.use(express.static(buildPath));
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`StoryForge API running on http://localhost:${PORT}`);
