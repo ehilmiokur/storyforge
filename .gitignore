@@ -14,6 +14,9 @@ server/.env
 /build
 /coverage
 
+# docs
+docs/
+
 # misc
 .DS_Store
 npm-debug.log*
