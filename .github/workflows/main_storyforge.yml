@@ -31,7 +31,7 @@ jobs:
 
       - name: Assemble deployment artifact
         run: |
-          mkdir -p deploy
+          mkdir -p deploy/build deploy/server/dist
           cp -r build deploy/build
           cp -r server/dist deploy/server/dist
           cp server/package.json deploy/server/package.json
