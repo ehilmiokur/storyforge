@@ -1,5 +1,12 @@
 export type ScriptStatus = 'idea' | 'draft' | 'final' | 'recorded';
 
+export interface User {
+  id: string;
+  email: string;
+  hashedPassword: string;
+  createdAt: string;
+}
+
 export interface Scene {
   id: string;
   scriptId: string;

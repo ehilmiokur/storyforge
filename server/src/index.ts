@@ -1,8 +1,10 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import path from 'path';
 import scriptsRouter from './routes/scripts';
+import authRouter from './routes/auth';
 
 const app = express();
 const PORT = process.env.PORT ?? 3001;
@@ -13,11 +15,13 @@ if (!isProd) {
 }
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
+app.use('/api/auth', authRouter);
 app.use('/api/scripts', scriptsRouter);
 
 if (isProd) {
