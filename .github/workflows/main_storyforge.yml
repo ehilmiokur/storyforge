@@ -57,7 +57,7 @@ jobs:
           name: node-app
 
       - name: Debug artifact contents
-        run: ls -la && ls -la server/ && ls -la server/dist/
+        run: ls -la && ls -la server/ && ls -la server/dist/ && find server/dist -name '*.js'
 
       - name: Login to Azure
         uses: azure/login@v2
