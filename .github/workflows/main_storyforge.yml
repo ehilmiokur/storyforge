@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir -p deploy/build deploy/server/dist
           cp -r build deploy/build
-          cp -r server/dist deploy/server/dist
+          cp -r server/dist/. deploy/server/dist
           cp server/package.json deploy/server/package.json
           cp server/package-lock.json deploy/server/package-lock.json
 
